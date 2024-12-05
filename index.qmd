@@ -1,0 +1,28 @@
+---
+title: "Elizabeth Bryson"
+image: "C:\\Users\\horse\\OneDrive - bw.edu\\Documents\\431 Project B Website\\431 Website\\Picture\\Bryson_Elizabeth_402430-Edit.jpg"
+about:
+  id: hero-heading
+  template: trestles
+  image-shape: rectangle
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://x.com/EBryson50575
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/elizabeth-bryson-2205a21a0/
+    - icon: envelope
+      text: email
+      href: mailto:ebryson2019@gmail.com
+
+
+---
+
+::: {#hero-heading}
+
+I am a PhD student in the department of Pathology at Case Western Reserve University under the mentorship of Dr. Rui Wang. My previous research background includes undergraduate training under the mentorship of Dr. Jaqueline Morris studying the role of CYP1B1 in the development of primary congenital glaucoma and participating in a post-baccalaureate program through NIH PREP at Case Western Reserve University where I studied the role of varying CAG repeat lengths in Spinal and Bulbar Muscular Atrophy disease onset and severity under the mentorship of Dr. Helen Miranda. This furthered my passion for biomedical research and cemented my goal of pursuing a PhD degree. In 2023 I enrolled in the Biomedical Sciences Training program at Case Western to pursue a PhD where I joined the Cancer Biology Training Program track in the Department of Pathology under the mentorship of Dr. Wang, studying the genetics of inflammatory bowel disease. 
+
+
+:::
+

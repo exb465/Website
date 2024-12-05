@@ -1,0 +1,12 @@
+---
+title: "CV"
+editor: visual
+---
+
+---
+title: "Curriculum Vitae"
+---
+
+# Curriculum Vitae
+
+[Download My CV](CV/Bryson_CV.PDF.pdf)

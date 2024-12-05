@@ -1,0 +1,27 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  page-navigation: true
+  title: "Elizabeth Bryson"
+  image: "Picture/Bryson_Elizabeth_402430-Edit.jpg"  # Relative path to the image
+
+  page-footer:
+    left: "<span class='faux-block'><a href='CV/Bryson_CV.pdf' download>Download CV</a></span>"
+    right: "This page is built with ❤️ and <a href='https://quarto.org/'>Quarto</a>."
+
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+      - href: CV.qmd
+        text: CV
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true

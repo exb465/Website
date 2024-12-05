@@ -1,0 +1,45 @@
+---
+title: "Elizabeth Bryson"
+image: "C:\\Users\\horse\\Downloads\\Bryson_Elizabeth_402430-Edit.jpg"
+about:
+  id: hero-heading
+  template: trestles
+  image-shape: rectangle
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://x.com/EBryson50575
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/elizabeth-bryson-2205a21a0/
+    - icon: envelope
+      text: email
+      href: mailto:ebryson2019@gmail.com
+---
+
+:::callout-note
+## Template for about page
+
+It is possible to use different templates for the About page. Check this [link](https://quarto.org/docs/websites/website-about.html) to find out more.
+
+:::
+
+
+::: {#hero-heading}
+
+I am a PhD student in the deparrtment of Pathology at Case Western Reserve University
+
+
+## Education 
+
+Case Western Reserve University | Cleveland, OH
+
+PhD in Pathology  2027
+
+Baldwin Wallace University | Berea, OH
+
+BS in Biology | May 2022
+
+
+:::
+
