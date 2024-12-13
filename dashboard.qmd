@@ -1,0 +1,106 @@
+---
+title: "Exploring the relationship between body mass index, gender, weight, and insulin levels"
+author: "Elizabeth Bryson"
+date: December 12 2024
+output:
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+---
+
+```{r}
+# Load required libraries
+library(tidyverse)
+library(flexdashboard)
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+library(haven)
+library(janitor) # For clean_names()
+options(warn = -1)
+knitr::opts_chunk$set(comment = NA, message = FALSE, warning = FALSE)
+
+# Define file paths
+body_path <- "C:\\Users\\horse\\OneDrive - bw.edu\\Desktop\\Project B part 2\\Bodymeasures.xpt"
+demo_path <- "C:\\Users\\horse\\OneDrive - bw.edu\\Desktop\\Project B part 2\\DEMO.xpt"
+insulin_path <- "C:\\Users\\horse\\OneDrive - bw.edu\\Desktop\\Project B part 2\\P_INSULINE.xpt"
+
+# Read datasets
+body <- haven::read_xpt(body_path) %>% clean_names()
+demo <- haven::read_xpt(demo_path) %>% clean_names()
+insulin <- haven::read_xpt(insulin_path) %>% clean_names()
+
+# Select relevant variables
+body <- body %>% select(seqn, bmxbmi, bmxwt)
+demo <- demo %>% select(seqn, ridreth1, riagendr, ridageyr)
+insulin <- insulin %>% select(seqn, wtsafprp, lbxin, lbdinlc)
+
+# Merge datasets
+nhanes_data <- body %>%
+  inner_join(demo, by = "seqn") %>%
+  inner_join(insulin, by = "seqn") %>%
+  filter(wtsafprp >= 4808.069916 & wtsafprp <= 741259.18875) %>%
+  drop_na()
+```
+
+## Exploring gender and racial differences in BMI and weight
+
+```{r}
+summary_data <- nhanes_data %>%
+  summarise(across(where(is.numeric), list(mean = mean, sd = sd, min = min, max = max), .names = "{col}_{fn}"))
+summary_data
+bmi_weight_diff <- nhanes_data$bmxbmi - nhanes_data$bmxwt
+t_test_a <- t.test(bmi_weight_diff, conf.level = 0.90)
+t_test_a
+
+ggplot(nhanes_data, aes(x = bmxbmi, y = bmxwt)) +
+  geom_point(color = "pink") +
+  geom_abline(slope = 1, intercept = 0, color = "purple", linetype = "dashed") +
+  labs(title = "Scatter Plot of BMXBMI vs BMXWT", x = "BMXBMI", y = "BMXWT")
+nhanes_data$riagendr <- as.factor(nhanes_data$riagendr)
+t_test_b <- t.test(bmxbmi ~ riagendr, data = nhanes_data, conf.level = 0.90)
+t_test_b
+
+ggplot(nhanes_data, aes(x = riagendr, y = bmxbmi, fill = riagendr)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("blue", "yellow")) +
+  labs(title = "Boxplot of BMXBMI by Gender", x = "Gender", y = "BMXBMI")
+nhanes_data$riagendr <- as.factor(nhanes_data$riagendr)
+t_test_b <- t.test(bmxbmi ~ riagendr, data = nhanes_data, conf.level = 0.90)
+t_test_b
+
+
+```
+
+## Exploring gender and racial differences in BMI, insulin levels, and weight
+
+```{r}
+set.seed(123)
+train_indices <- sample(seq_len(nrow(nhanes_data)), size = 0.7 * nrow(nhanes_data))
+train_data <- nhanes_data[train_indices, ]
+test_data <- nhanes_data[-train_indices, ]
+
+full_model <- lm(bmxbmi ~ bmxwt + ridageyr + riagendr + ridreth1 + lbxin, data = train_data)
+subset_model <- lm(bmxbmi ~ lbxin, data = train_data)
+
+summary(full_model)
+summary(subset_model)
+pred_full <- predict(full_model, newdata = test_data)
+pred_subset <- predict(subset_model, newdata = test_data)
+
+p1 <- ggplot(test_data, aes(x = bmxbmi, y = pred_full)) +
+  geom_point(color = "blue", alpha = 0.5) +
+  geom_abline(slope = 1, intercept = 0, color = "purple", linetype = "dashed") +
+  labs(title = "Full Model: Observed vs Predicted", x = "Observed", y = "Predicted")
+
+p2 <- ggplot(test_data, aes(x = bmxbmi, y = pred_subset)) +
+  geom_point(color = "yellow", alpha = 0.5) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "orange") +
+  labs(title = "Subset Model: Observed vs Predicted", x = "Observed", y = "Predicted")
+
+gridExtra::grid.arrange(p1, p2, ncol = 2)
+
+cat("Test Set Full Model RMSPE:", sqrt(mean((test_data$bmxbmi - pred_full)^2)), "\n")
+cat("Test Set Subset Model RMSPE:", sqrt(mean((test_data$bmxbmi - pred_subset)^2)), "\n")
+
+```
