@@ -1,0 +1,12 @@
+---
+title: "Project B blog"
+author: Elizabeth Bryson
+format: html
+editor: visual
+---
+
+## Introduction
+
+Welcome to my blog, where we explore various subject regarding science and data analysis.
+
+This first post is dedicated to a project where I analyzed data from Nhanes to explore the effects of gender, race, and weight on BMI. Various analyses were used for this project such as T-test, ANOVA, contingency tables, and regressions. Through these tests, we were able to determine that gender, race, and weight all have significant effects on BMI.
