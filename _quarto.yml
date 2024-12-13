@@ -1,6 +1,13 @@
 project:
   type: website
   output-dir: docs
+  entries:
+  - file: index.qmd
+    title: Home
+  - file: dashboard.qmd
+    title: Dashboard
+  - file: Project-B-blog.qmd
+    title: Blog
 
 website:
   page-navigation: true
